@@ -1,5 +1,6 @@
 package br.com.parc3ria.verify;
 
+import br.com.parc3ria.verify.principal.AppConfig;
 import br.com.parc3ria.verify.principal.Principal;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,8 @@ public class VerifyApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal();
+		AppConfig appConfig = new AppConfig();
+		Principal principal = new Principal(appConfig);
 		principal.showMenu();
 	}
 }
