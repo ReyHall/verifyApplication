@@ -1,5 +1,6 @@
 package br.com.parc3ria.verify.principal;
 
+import br.com.parc3ria.verify.model.email.DadosEmail;
 import br.com.parc3ria.verify.service.Conversor;
 import br.com.parc3ria.verify.service.RequestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class Principal {
         listaChoice.forEach(System.out::println);
         System.out.print("Digite qual opção acima deseja escolher: ");
         var choice = getValidationChoice(scanner.nextLine());
+        getDados(choice);
+        System.exit(0);
     }
 
     private String getValidationChoice(String choice){
@@ -33,5 +36,25 @@ public class Principal {
                 .filter(f -> f.contains(choice.toLowerCase()))
                 .findFirst()
                 .orElseGet(() -> listaChoice.get((int) (Math.random() * listaChoice.size())));
+    }
+
+    private void getDados(String choice){
+        String json;
+        String campo;
+        String key;
+
+        switch (choice){
+            case "email":
+                key = apiKeys.get("apiKeyEmail");
+                System.out.print("Digite um email para verificar se e valido: ");
+                campo = scanner.next().toLowerCase();
+                scanner.nextLine();
+                json = requestAPI.get(URL_BASE_EMAIL + key + "&email=" + campo);
+
+                DadosEmail dadosEmail = conversor.obterDados(json, DadosEmail.class);
+                System.out.println(dadosEmail);
+            default:
+                break;
+        }
     }
 }
