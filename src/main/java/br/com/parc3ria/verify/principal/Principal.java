@@ -1,6 +1,7 @@
 package br.com.parc3ria.verify.principal;
 
 import br.com.parc3ria.verify.model.email.DadosEmail;
+import br.com.parc3ria.verify.model.email.Email;
 import br.com.parc3ria.verify.service.Conversor;
 import br.com.parc3ria.verify.service.RequestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,22 @@ public class Principal {
                 System.out.println(json);
 
                 DadosEmail dadosEmail = conversor.obterDados(json, DadosEmail.class);
-                System.out.println(dadosEmail);
+                Email emailDados = new Email(dadosEmail);
+                printDados(emailDados);
             default:
                 break;
+        }
+    }
+
+    private <T> void printDados(T dados){
+        if(dados instanceof Email){
+            System.out.print(
+                    "\nEmail: " + ((Email) dados).getEmail() +
+                            "\nQualidade: " + ((Email) dados).getQualidade() +
+                            "\nEmail valido: " + ((Email) dados).getEmailValido() +
+                            "\nEmail gratis: " + ((Email) dados).getEmailGratis() +
+                            "\nEntrega: " + ((Email) dados).getEntrega()
+            );
         }
     }
 }

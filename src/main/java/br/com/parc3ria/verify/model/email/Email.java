@@ -7,7 +7,7 @@ public class Email {
     private String emailValido;
     private String emailGratis;
 
-    public String getEmail() { return emailGratis; }
+    public String getEmail() { return email; }
     public String getEntrega() { return entrega; }
     public String getEmailValido() { return emailValido; }
     public Double getQualidade() { return qualidade; }
