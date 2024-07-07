@@ -4,15 +4,17 @@ import br.com.parc3ria.verify.model.email.DadosEmail;
 import br.com.parc3ria.verify.service.Conversor;
 import br.com.parc3ria.verify.service.RequestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+@Component
 public class Principal {
     private RequestAPI requestAPI = new RequestAPI();
     private Conversor conversor = new Conversor();
     private Scanner scanner = new Scanner(System.in);
-    private static final String URL_BASE_EMAIL = "http://emailvalidation.abstractapi.com/v1/?";
+    private static final String URL_BASE_EMAIL = "https://emailvalidation.abstractapi.com/v1/?";
     private List<String> listaChoice = Arrays.asList("Email");
     private Map<String, String> apiKeys = new HashMap<>();
 
@@ -50,6 +52,7 @@ public class Principal {
                 campo = scanner.next().toLowerCase();
                 scanner.nextLine();
                 json = requestAPI.get(URL_BASE_EMAIL + key + "&email=" + campo);
+                System.out.println(json);
 
                 DadosEmail dadosEmail = conversor.obterDados(json, DadosEmail.class);
                 System.out.println(dadosEmail);
