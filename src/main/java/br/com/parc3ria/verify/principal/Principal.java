@@ -24,6 +24,7 @@ public class Principal {
 
     public Principal(@NotNull AppConfig appConfig){
         apiKeys.put("apiKeyEmail", appConfig.getApiKeyEmail());
+        apiKeys.put("apiKeyTelefone", appConfig.getApiKeyTelefone());
     }
 
     @Autowired
@@ -64,13 +65,16 @@ public class Principal {
 
             case "telefone":
                 key = apiKeys.get("apiKeyTelefone");
-                System.out.print("Digite um numero de telefone para verificar se e valido: ");
+                System.out.print("Digite um numero de telefone para verificar se e valido (Inclua Prefixo e DD): ");
                 campo = scanner.nextLine();
-
+                campo = campo.replaceAll("\\s+", "");
                 json = requestAPI.get(URL_BASE_TELEFONE + key + "&phone=" + campo);
                 DadosTelefone dadosTelefone = conversor.obterDados(json, DadosTelefone.class);
                 Telefone telefone = new Telefone(dadosTelefone);
                 printDados(telefone);
+
+            default:
+                break;
         }
     }
 
