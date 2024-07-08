@@ -2,6 +2,8 @@ package br.com.parc3ria.verify.principal;
 
 import br.com.parc3ria.verify.model.email.DadosEmail;
 import br.com.parc3ria.verify.model.email.Email;
+import br.com.parc3ria.verify.model.telefone.DadosTelefone;
+import br.com.parc3ria.verify.model.telefone.Telefone;
 import br.com.parc3ria.verify.service.Conversor;
 import br.com.parc3ria.verify.service.RequestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class Principal {
     private Scanner scanner = new Scanner(System.in);
     private static final String URL_BASE_EMAIL = "https://emailvalidation.abstractapi.com/v1/?";
     private static final String URL_BASE_TELEFONE = "https://phonevalidation.abstractapi.com/v1/?";
-    private List<String> listaChoice = Arrays.asList("Email");
+    private List<String> listaChoice = Arrays.asList("Email", "Telefone");
     private Map<String, String> apiKeys = new HashMap<>();
 
     public Principal(@NotNull AppConfig appConfig){
@@ -53,16 +55,22 @@ public class Principal {
                 System.out.print("Digite um email para verificar se e valido: ");
                 campo = scanner.next().toLowerCase();
                 scanner.nextLine();
-                json = requestAPI.get(URL_BASE_EMAIL + key + "&email=" + campo);
-                System.out.println(json);
 
+                json = requestAPI.get(URL_BASE_EMAIL + key + "&email=" + campo);
                 DadosEmail dadosEmail = conversor.obterDados(json, DadosEmail.class);
                 Email emailDados = new Email(dadosEmail);
                 printDados(emailDados);
                 break;
-            default:
-                break;
 
+            case "telefone":
+                key = apiKeys.get("apiKeyTelefone");
+                System.out.print("Digite um numero de telefone para verificar se e valido: ");
+                campo = scanner.nextLine();
+
+                json = requestAPI.get(URL_BASE_TELEFONE + key + "&phone=" + campo);
+                DadosTelefone dadosTelefone = conversor.obterDados(json, DadosTelefone.class);
+                Telefone telefone = new Telefone(dadosTelefone);
+                printDados(telefone);
         }
     }
 
