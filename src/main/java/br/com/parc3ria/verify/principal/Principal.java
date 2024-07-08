@@ -16,6 +16,7 @@ public class Principal {
     private Conversor conversor = new Conversor();
     private Scanner scanner = new Scanner(System.in);
     private static final String URL_BASE_EMAIL = "https://emailvalidation.abstractapi.com/v1/?";
+    private static final String URL_BASE_TELEFONE = "https://phonevalidation.abstractapi.com/v1/?";
     private List<String> listaChoice = Arrays.asList("Email");
     private Map<String, String> apiKeys = new HashMap<>();
 
@@ -58,8 +59,10 @@ public class Principal {
                 DadosEmail dadosEmail = conversor.obterDados(json, DadosEmail.class);
                 Email emailDados = new Email(dadosEmail);
                 printDados(emailDados);
+                break;
             default:
                 break;
+
         }
     }
 
