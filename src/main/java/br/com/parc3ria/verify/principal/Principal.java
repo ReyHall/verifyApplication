@@ -83,6 +83,16 @@ public class Principal {
                             "\nEmail gratis: " + ((Email) dados).getEmailGratis() +
                             "\nEntrega: " + ((Email) dados).getEntrega()
             );
+        } else if(dados instanceof Telefone){
+            System.out.print(
+                    "\nTelefone: " + ((Telefone) dados).getTelefone() +
+                            "\nValido: " + ((Telefone) dados).getValido() +
+                            "\nInternacional: " + ((Telefone) dados).getInternacional() +
+                            "\nLocal: " + ((Telefone) dados).getLocal() +
+                            "\nPais: " + ((Telefone) dados).getNome() +
+                            "\nPrefixo: " + ((Telefone) dados).getPrefixo() +
+                            "\nLocalização: " + ((Telefone) dados).getLocalizacao()
+            );
         }
     }
 }
